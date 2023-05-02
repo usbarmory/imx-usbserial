@@ -63,13 +63,13 @@ func addControlInterface(device *usb.Device, serial *UART) (iface *usb.Interface
 
 	iface.ClassDescriptors = append(iface.ClassDescriptors, cm.Bytes())
 
-	ep1IN := &usb.EndpointDescriptor{}
-	ep1IN.SetDefaults()
-	ep1IN.EndpointAddress = 0x81
-	ep1IN.Attributes = 3
-	ep1IN.MaxPacketSize = 64
-	ep1IN.Interval = 11
-	ep1IN.Function = serial.Control
+	ep2IN := &usb.EndpointDescriptor{}
+	ep2IN.SetDefaults()
+	ep2IN.EndpointAddress = 0x82
+	ep2IN.Attributes = 3
+	ep2IN.MaxPacketSize = 64
+	ep2IN.Interval = 11
+	ep2IN.Function = serial.Control
 
 	iface.Endpoints = append(iface.Endpoints, ep1IN)
 
@@ -88,21 +88,21 @@ func addDataInterfaces(device *usb.Device, serial *UART) {
 	iInterface, _ := device.AddString(`CDC Data`)
 	iface1.Interface = iInterface
 
-	ep2IN := &usb.EndpointDescriptor{}
-	ep2IN.SetDefaults()
-	ep2IN.EndpointAddress = 0x82
-	ep2IN.Attributes = 2
-	ep2IN.MaxPacketSize = MaxPacketSize
-	ep2IN.Function = serial.Tx
+	ep1IN := &usb.EndpointDescriptor{}
+	ep1IN.SetDefaults()
+	ep1IN.EndpointAddress = 0x81
+	ep1IN.Attributes = 2
+	ep1IN.MaxPacketSize = MaxPacketSize
+	ep1IN.Function = serial.Tx
 
 	iface1.Endpoints = append(iface1.Endpoints, ep2IN)
 
-	ep2OUT := &usb.EndpointDescriptor{}
-	ep2OUT.SetDefaults()
-	ep2OUT.EndpointAddress = 0x02
-	ep2IN.MaxPacketSize = MaxPacketSize
-	ep2OUT.Attributes = 2
-	ep2OUT.Function = serial.Rx
+	ep1OUT := &usb.EndpointDescriptor{}
+	ep1OUT.SetDefaults()
+	ep1OUT.EndpointAddress = 0x01
+	ep1OUT.MaxPacketSize = MaxPacketSize
+	ep1OUT.Attributes = 2
+	ep1OUT.Function = serial.Rx
 
 	iface1.Endpoints = append(iface1.Endpoints, ep2OUT)
 
