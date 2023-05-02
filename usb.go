@@ -71,7 +71,7 @@ func addControlInterface(device *usb.Device, serial *UART) (iface *usb.Interface
 	ep2IN.Interval = 11
 	ep2IN.Function = serial.Control
 
-	iface.Endpoints = append(iface.Endpoints, ep1IN)
+	iface.Endpoints = append(iface.Endpoints, ep2IN)
 
 	device.Configurations[0].AddInterface(iface)
 
@@ -95,7 +95,7 @@ func addDataInterfaces(device *usb.Device, serial *UART) {
 	ep1IN.MaxPacketSize = MaxPacketSize
 	ep1IN.Function = serial.Tx
 
-	iface1.Endpoints = append(iface1.Endpoints, ep2IN)
+	iface1.Endpoints = append(iface1.Endpoints, ep1IN)
 
 	ep1OUT := &usb.EndpointDescriptor{}
 	ep1OUT.SetDefaults()
@@ -104,7 +104,7 @@ func addDataInterfaces(device *usb.Device, serial *UART) {
 	ep1OUT.Attributes = 2
 	ep1OUT.Function = serial.Rx
 
-	iface1.Endpoints = append(iface1.Endpoints, ep2OUT)
+	iface1.Endpoints = append(iface1.Endpoints, ep1OUT)
 
 	device.Configurations[0].AddInterface(iface1)
 
